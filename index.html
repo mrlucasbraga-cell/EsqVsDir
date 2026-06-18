@@ -3,369 +3,530 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guerra Cripto: ESQ vs DIR</title>
+    <title>ESQ VS DIR - Mobile com Capa</title>
     <style>
-        :root {
-            --bg-color: #0b0e14;
-            --card-bg: rgba(20, 26, 38, 0.8);
-            --esq-color: #00ff66;
-            --esq-neon: 0 0 20px #00ff66, 0 0 40px rgba(0, 255, 102, 0.3);
-            --dir-color: #ff0055;
-            --dir-neon: 0 0 20px #ff0055, 0 0 40px rgba(255, 0, 85, 0.3);
-            --text-main: #ffffff;
-            --text-muted: #8491a5;
-            --border-glow: rgba(255, 255, 255, 0.05);
-        }
-
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-image: url('background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: #030712;
+            color: #ffffff;
             min-height: 100vh;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(0, 255, 102, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(255, 0, 85, 0.05) 0%, transparent 40%);
-        }
-
-        .main-wrapper {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0 40px 0;
-            border-bottom: 1px solid var(--border-glow);
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            background: linear-gradient(90deg, var(--esq-color), var(--dir-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .btn-connect {
-            background: transparent;
-            border: 2px solid var(--text-main);
-            color: var(--text-main);
-            padding: 12px 24px;
-            font-weight: 700;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-
-        .btn-connect:hover {
-            background: var(--text-main);
-            color: var(--bg-color);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-        }
-
-        .scoreboard-container {
-            background: var(--card-bg);
-            border: 1px solid var(--border-glow);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 40px;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
-
-        .scoreboard-title {
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
-
-        .placar-grafico {
-            display: flex;
-            height: 35px;
-            background: #141a26;
-            border-radius: 50px;
-            overflow: hidden;
-            margin-bottom: 25px;
-            border: 2px solid rgba(255,255,255,0.1);
-        }
-
-        .barra-esq {
-            width: 52%; 
-            background: var(--esq-color);
-            box-shadow: var(--esq-neon);
-            transition: width 0.5s ease;
-        }
-
-        .barra-dir {
-            width: 48%; 
-            background: var(--dir-color);
-            box-shadow: var(--dir-neon);
-            transition: width 0.5s ease;
-        }
-
-        .valores-placar {
-            display: flex;
-            justify-content: space-between;
-            font-size: 2.2rem;
-            font-weight: 900;
-        }
-
-        .val-esq { color: var(--esq-color); text-shadow: var(--esq-neon); }
-        .val-dir { color: var(--dir-color); text-shadow: var(--dir-neon); }
-
-        .battle-arena {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-        }
-
-        @media (max-width: 900px) {
-            .battle-arena {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .lado-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 40px;
-            border: 1px solid var(--border-glow);
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            transition: transform 0.3s ease;
+            align-items: center;
         }
 
-        .lado-card.esq { border-left: 5px solid var(--esq-color); }
-        .lado-card.esq:hover { box-shadow: 0 0 30px rgba(0, 255, 102, 0.1); transform: translateY(-2px); }
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(3, 7, 18, 0.92);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 16px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden; /* Garante que a capa respeite os cantos arredondados */
+        }
 
-        .lado-card.dir { border-right: 5px solid var(--dir-color); }
-        .lado-card.dir:hover { box-shadow: 0 0 30px rgba(255, 0, 85, 0.1); transform: translateY(-2px); }
+        /* Imagem de Capa do Topo */
+        .header-cover {
+            width: calc(100% + 32px); /* Compensa o padding do container */
+            margin: -16px -16px 20px -16px; /* Cola a imagem nas bordas superiores */
+            height: 160px; /* Altura ideal de capa para smartphone */
+            background-image: url('topo1.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
 
-        .token-header {
+        /* Header / Nav Interna */
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .logo {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+        .logo-esq { color: #ff1212; text-shadow: 0 0 8px rgba(255,18,18,0.5); }
+        .logo-vs { color: #ffffff; font-style: italic; font-size: 14px; margin: 0 4px; }
+        .logo-dir { color: #1254ff; text-shadow: 0 0 8px rgba(18,84,255,0.5); }
+        
+        .btn-wallet {
+            background: linear-gradient(90deg, rgba(18,84,255,0.1) 0%, rgba(18,84,255,0.3) 100%);
+            border: 1px solid #1254ff;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 0 10px rgba(18, 84, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .token-name { font-size: 2rem; font-weight: 800; }
-        .esq .token-name { color: var(--esq-color); }
-        .dir .token-name { color: var(--dir-color); }
-
-        .token-badge {
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.85rem;
+        /* Live Scoreboard */
+        .scoreboard-title {
+            text-align: center;
+            font-size: 11px;
             letter-spacing: 1px;
-        }
-        .esq .token-badge { background: rgba(0, 255, 102, 0.15); color: var(--esq-color); }
-        .dir .token-badge { background: rgba(255, 0, 85, 0.15); color: var(--dir-color); }
-
-        .resumo-texto {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        .buy-box {
-            background: rgba(11, 14, 20, 0.6);
-            border-radius: 12px;
-            padding: 25px;
-            border: 1px solid rgba(255,255,255,0.03);
-        }
-
-        .input-group { margin-bottom: 15px; }
-        .input-group label {
-            display: block;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-bottom: 8px;
+            color: #9ca3af;
+            margin-bottom: 10px;
             font-weight: 600;
-            letter-spacing: 1px;
+        }
+        .scoreboard-title .red-star { color: #ff1212; }
+        .scoreboard-title .blue-star { color: #1254ff; }
+
+        .bar-container {
+            width: 100%;
+            height: 20px;
+            background: #111827;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .bar-esq {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 52.4%;
+            background: linear-gradient(90deg, #ff1212, #ff5555);
+            box-shadow: 0 0 12px rgba(255, 18, 18, 0.7);
+        }
+        .bar-dir {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 47.6%;
+            background: linear-gradient(90deg, #5555ff, #1254ff);
+            box-shadow: 0 0 12px rgba(18, 84, 255, 0.7);
         }
 
-        .input-wrapper { position: relative; display: flex; align-items: center; }
-        .input-wrapper input {
-            width: 100%;
-            background: #141a26;
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 14px;
-            border-radius: 8px;
-            color: white;
-            font-size: 1.1rem;
-            font-weight: 700;
-            outline: none;
-            transition: border-color 0.3s;
+        .percentage-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            padding: 0 4px;
         }
+        .pct-box {
+            font-size: 32px;
+            font-weight: 900;
+        }
+        .pct-esq { color: #ff1212; text-shadow: 0 0 12px rgba(255,18,18,0.5); }
+        .pct-dir { color: #1254ff; text-shadow: 0 0 12px rgba(18,84,255,0.5); }
 
-        .esq .input-wrapper input:focus { border-color: var(--esq-color); }
-        .dir .input-wrapper input:focus { border-color: var(--dir-color); }
-
-        .input-currency { position: absolute; right: 15px; font-weight: 800; color: var(--text-muted); }
-
-        .btn-buy {
-            width: 100%;
-            padding: 16px;
+        /* Segmented Control / Tabs for Mobile Switch */
+        .tab-container {
+            display: flex;
+            background: #111827;
+            padding: 4px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
             border-radius: 8px;
-            border: none;
-            font-size: 1.1rem;
-            font-weight: 800;
             cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            margin-top: 10px;
+            transition: all 0.2s ease;
+            border: none;
+            color: #9ca3af;
+            background: transparent;
+        }
+        .tab-btn.active-esq {
+            background: #ff1212;
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(255, 18, 18, 0.4);
+        }
+        .tab-btn.active-dir {
+            background: #1254ff;
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(18, 84, 255, 0.4);
         }
 
-        .esq .btn-buy { background: var(--esq-color); color: #000; }
-        .esq .btn-buy:hover { box-shadow: var(--esq-neon); transform: scale(1.01); }
+        /* Forms Columns */
+        .column {
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 24px;
+            display: none;
+        }
+        .column.active {
+            display: block;
+        }
+        
+        .col-esq {
+            border: 1px solid rgba(255, 18, 18, 0.25);
+            background: linear-gradient(180deg, rgba(255, 18, 18, 0.03) 0%, rgba(0, 0, 0, 0.3) 100%);
+        }
+        .col-dir {
+            border: 1px solid rgba(18, 84, 255, 0.25);
+            background: linear-gradient(180deg, rgba(18, 84, 255, 0.03) 0%, rgba(0, 0, 0, 0.3) 100%);
+        }
 
-        .dir .btn-buy { background: var(--dir-color); color: #fff; }
-        .dir .btn-buy:hover { box-shadow: var(--dir-neon); transform: scale(1.01); }
+        /* Avatar Section */
+        .avatar-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+        .avatar-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+        }
+        .col-esq .avatar-circle {
+            border: 3px solid #ff1212;
+            box-shadow: 0 0 15px rgba(255, 18, 18, 0.5);
+            background-image: url('foto-e.png');
+        }
+        .col-dir .avatar-circle {
+            border: 3px solid #1254ff;
+            box-shadow: 0 0 15px rgba(18, 84, 255, 0.5);
+            background-image: url('foto-d.png');
+        }
 
-        .info-minima { text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-top: 12px; }
+        .coin-title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        
+        .token-tag {
+            display: block;
+            width: fit-content;
+            margin: 0 auto 12px auto;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        .col-esq .token-tag { background: rgba(255, 18, 18, 0.15); color: #ff5555; border: 1px solid rgba(255, 18, 18, 0.3); }
+        .col-dir .token-tag { background: rgba(18, 84, 255, 0.15); color: #5555ff; border: 1px solid rgba(18, 84, 255, 0.3); }
+
+        .coin-description {
+            font-size: 13px;
+            line-height: 1.4;
+            color: #d1d5db;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        /* Swap Form */
+        .swap-box {
+            background: rgba(17, 24, 39, 0.8);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .swap-label {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-bottom: 6px;
+        }
+        .swap-input-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .swap-input {
+            width: 60%;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            outline: none;
+        }
+        .currency-select {
+            font-size: 13px;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+        
+        .swap-arrow {
+            text-align: center;
+            margin: 4px auto;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 13px;
+            background: #1f2937;
+        }
+        .col-esq .swap-arrow { color: #ff1212; border: 1px solid rgba(255, 18, 18, 0.2); }
+        .col-dir .swap-arrow { color: #1254ff; border: 1px solid rgba(18, 84, 255, 0.2); }
+
+        /* Call To Action Button */
+        .btn-action {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-top: 14px;
+            margin-bottom: 12px;
+        }
+        .col-esq .btn-action {
+            background: linear-gradient(180deg, #ff1212 0%, #b30000 100%);
+            box-shadow: 0 4px 12px rgba(255, 18, 18, 0.3);
+        }
+        .col-dir .btn-action {
+            background: linear-gradient(180deg, #1254ff 0%, #003db3 100%);
+            box-shadow: 0 4px 12px rgba(18, 84, 255, 0.3);
+        }
+
+        .tax-notice {
+            font-size: 11px;
+            text-align: center;
+            line-height: 1.3;
+        }
+        .col-esq .tax-notice { color: #ffa1a1; }
+        .col-dir .tax-notice { color: #a1beff; }
+
+        /* Grid Features (Stacked on Mobile) */
+        .features-vertical {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 16px;
+            margin-bottom: 20px;
+        }
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .feature-icon {
+            font-size: 18px;
+            margin-top: -2px;
+        }
+        .feature-text-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .feature-title {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+        .feature-desc {
+            font-size: 11px;
+            color: #9ca3af;
+        }
+
+        .bottom-banner {
+            text-align: center;
+            font-size: 11px;
+            color: #9ca3af;
+            line-height: 1.4;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 12px;
+        }
+        .bottom-banner .red { color: #ff1212; }
+        .bottom-banner .blue { color: #1254ff; }
     </style>
 </head>
 <body>
 
-    <div class="main-wrapper">
-        <header>
-            <div class="logo">ESQ vs DIR</div>
-            <button class="btn-connect" id="connectBtn" onclick="conectarMetaMask()">Conectar Carteira</button>
-        </header>
-
-        <section class="scoreboard-container">
-            <div class="scoreboard-title">Placar de Volume de Mercado (Ao Vivo)</div>
-            <div class="placar-grafico">
-                <div class="barra-esq" id="barraEsq"></div>
-                <div class="barra-dir" id="barraDir"></div>
+    <div class="container">
+        
+        <div class="header-cover"></div>
+        
+        <div class="header">
+            <div class="logo">
+                <span class="logo-esq">ESQ</span><span class="logo-vs">VS</span><span class="logo-dir">DIR</span>
             </div>
-            <div class="valores-placar">
-                <div class="val-esq" id="volumeEsq">52.4%</div>
-                <div class="val-dir" id="volumeDir">47.6%</div>
+            <a href="#" class="btn-wallet">
+                <span>👛</span> Conectar Carteira
+            </a>
+        </div>
+
+        <div class="scoreboard-title">
+            <span class="red-star">★</span> PLACAR DE VOLUME DE MERCADO (AO VIVO) <span class="blue-star">★</span>
+        </div>
+        
+        <div class="bar-container">
+            <div class="bar-esq"></div>
+            <div class="bar-dir"></div>
+        </div>
+
+        <div class="percentage-container">
+            <div class="pct-box pct-esq">52.4%</div>
+            <div class="pct-box pct-dir">47.6%</div>
+        </div>
+
+        <div class="tab-container">
+            <button id="btn-esq" class="tab-btn active-esq" onclick="switchSide('esq')">Esquerda Coin</button>
+            <button id="btn-dir" class="tab-btn" onclick="switchSide('dir')">Direita Coin</button>
+        </div>
+
+        <div id="panel-esq" class="column col-esq active">
+            <div class="avatar-wrapper">
+                <div class="avatar-circle"></div>
             </div>
-        </section>
+            <h2 class="coin-title">Esquerda Coin</h2>
+            <div class="token-tag">TOKEN: ESQ</div>
+            <p class="coin-description">
+                O token oficial de quem defende as pautas e a união da Esquerda na blockchain. Toda transação fortalece o placar com 5% de taxa revertidos para garantir a liquidez e a virada gráfica.
+            </p>
 
-        <main class="battle-arena">
-            <div class="lado-card esq">
-                <div>
-                    <div class="token-header">
-                        <div class="token-name">Esquerda Coin</div>
-                        <div class="token-badge">TOKEN: ESQ</div>
-                    </div>
-                    <p class="resumo-texto">
-                        O token oficial de quem defende as pautas e a união da Esquerda na blockchain. 
-                        Toda transação fortalece o placar com 5% de taxa revertidos para garantir a liquidez e a virada gráfica. 
-                        Não deixe o outro lado dominar a rede!
-                    </p>
-                </div>
-
-                <div class="buy-box">
-                    <div class="input-group">
-                        <label>Você paga</label>
-                        <div class="input-wrapper">
-                            <input type="number" step="0.01" placeholder="0.0" id="inputEsqBnb" oninput="calcularTokensEsq(this.value)">
-                            <span class="input-currency">BNB</span>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label>Você recebe (Estimado)</label>
-                        <div class="input-wrapper">
-                            <input type="text" placeholder="0.0" id="inputEsqTokens" readonly>
-                            <span class="input-currency" style="color: var(--esq-color)">ESQ</span>
-                        </div>
-                    </div>
-                    <button class="btn-buy" onclick="comprarTokens('ESQ')">Comprar ESQ</button>
-                    <div class="info-minima">Taxa de rede padrão + 5% de taxa do projeto aplicada.</div>
+            <div class="swap-box">
+                <div class="swap-label">Você paga:</div>
+                <div class="swap-input-row">
+                    <input type="number" class="swap-input" placeholder="0.0" inputmode="decimal">
+                    <div class="currency-select">🔶 BNB ▾</div>
                 </div>
             </div>
 
-            <div class="lado-card dir">
-                <div>
-                    <div class="token-header">
-                        <div class="token-name">Direita Coin</div>
-                        <div class="token-badge">TOKEN: DIR</div>
-                    </div>
-                    <p class="resumo-texto">
-                        A moeda soberana da Direita na internet. Desenvolvida para financiar o ecossistema 
-                        de engajamento e provar quem tem o maior volume de força financeira. 
-                        Mecanismo de proteção anti-baleia ativo para o gráfico subir de forma sólida.
-                    </p>
-                </div>
+            <div class="swap-arrow">⇅</div>
 
-                <div class="buy-box">
-                    <div class="input-group">
-                        <label>Você paga</label>
-                        <div class="input-wrapper">
-                            <input type="number" step="0.01" placeholder="0.0" id="inputDirBnb" oninput="calcularTokensDir(this.value)">
-                            <span class="input-currency">BNB</span>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label>Você recebe (Estimado)</label>
-                        <div class="input-wrapper">
-                            <input type="text" placeholder="0.0" id="inputDirTokens" readonly>
-                            <span class="input-currency" style="color: var(--dir-color)">DIR</span>
-                        </div>
-                    </div>
-                    <button class="btn-buy" onclick="comprarTokens('DIR')">Comprar DIR</button>
-                    <div class="info-minima">Taxa de rede padrão + 5% de taxa do projeto aplicada.</div>
+            <div class="swap-box">
+                <div class="swap-label">Você recebe (Estimado):</div>
+                <div class="swap-input-row">
+                    <input type="number" class="swap-input" placeholder="0.0" readonly>
+                    <div class="currency-select">🔴 ESQ ▾</div>
                 </div>
             </div>
-        </main>
+
+            <button class="btn-action">🛒 Comprar ESQ</button>
+            <div class="tax-notice">✓ Taxa de rede padrão + 5% de taxa do projeto aplicada.</div>
+        </div>
+
+        <div id="panel-dir" class="column col-dir">
+            <div class="avatar-wrapper">
+                <div class="avatar-circle"></div>
+            </div>
+            <h2 class="coin-title">Direita Coin</h2>
+            <div class="token-tag">TOKEN: DIR</div>
+            <p class="coin-description">
+                A moeda soberana da Direita na internet. Desenvolvida para financiar o ecossistema de engajamento e provar quem tem o maior volume de força financeira. Mecanismo de proteção anti-baleia ativo.
+            </p>
+
+            <div class="swap-box">
+                <div class="swap-label">Você paga:</div>
+                <div class="swap-input-row">
+                    <input type="number" class="swap-input" placeholder="0.0" inputmode="decimal">
+                    <div class="currency-select">🔶 BNB ▾</div>
+                </div>
+            </div>
+
+            <div class="swap-arrow">⇅</div>
+
+            <div class="swap-box">
+                <div class="swap-label">Você recebe (Estimado):</div>
+                <div class="swap-input-row">
+                    <input type="number" class="swap-input" placeholder="0.0" readonly>
+                    <div class="currency-select">🔵 DIR ▾</div>
+                </div>
+            </div>
+
+            <button class="btn-action">🛒 Comprar DIR</button>
+            <div class="tax-notice">✓ Taxa de rede padrão + 5% de taxa do projeto aplicada.</div>
+        </div>
+
+        <div class="features-vertical">
+            <div class="feature-item">
+                <div class="feature-icon">📊</div>
+                <div class="feature-text-group">
+                    <div class="feature-title" style="color: #ff1212;">PLACAR AO VIVO</div>
+                    <div class="feature-desc">Acompanhe o volume em tempo real</div>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🔥</div>
+                <div class="feature-text-group">
+                    <div class="feature-title" style="color: #ffaa00;">TAXA QUE FORTALECE</div>
+                    <div class="feature-desc">5% de cada transação para virar o jogo</div>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🛡️</div>
+                <div class="feature-text-group">
+                    <div class="feature-title" style="color: #1254ff;">PROTEÇÃO ANTI-BALEIA</div>
+                    <div class="feature-desc">Mecanismo ativo para um gráfico saudável</div>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🔒</div>
+                <div class="feature-text-group">
+                    <div class="feature-title" style="color: #00ffcc;">SEGURANÇA TOTAL</div>
+                    <div class="feature-desc">Contratos auditados e 100% transparentes</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-banner">
+            <span class="red">★</span> Escolha seu lado. Fortaleça seu movimento. Vire o placar. <span class="blue">★</span>
+        </div>
+
     </div>
 
     <script>
-        function conectarMetaMask() {
-            if (typeof window.ethereum !== 'undefined') {
-                window.ethereum.request({ method: 'eth_requestAccounts' })
-                .then(accounts => {
-                    const conta = accounts[0];
-                    document.getElementById('connectBtn').innerText = conta.substring(0,6) + '...' + conta.substring(conta.length - 4);
-                })
-                .catch(err => { console.error(err); });
+        function switchSide(side) {
+            const btnEsq = document.getElementById('btn-esq');
+            const btnDir = document.getElementById('btn-dir');
+            const panelEsq = document.getElementById('panel-esq');
+            const panelDir = document.getElementById('panel-dir');
+
+            if (side === 'esq') {
+                btnEsq.classList.add('active-esq');
+                btnDir.classList.remove('active-dir');
+                panelEsq.classList.add('active');
+                panelDir.classList.remove('active');
             } else {
-                alert('MetaMask não encontrada. Abra este site dentro do app da MetaMask ou use um navegador com a extensão ligada.');
+                btnDir.classList.add('active-dir');
+                btnEsq.classList.remove('active-esq');
+                panelDir.classList.add('active');
+                panelEsq.classList.remove('active');
             }
-        }
-
-        function calcularTokensEsq(valorBnb) {
-            if(!valorBnb || valorBnb <= 0) { document.getElementById('inputEsqTokens').value = '0.0'; return; }
-            let resultado = valorBnb * 15000000; // Simulação de preço inicial
-            document.getElementById('inputEsqTokens').value = resultado.toLocaleString('pt-BR');
-        }
-
-        function calcularTokensDir(valorBnb) {
-            if(!valorBnb || valorBnb <= 0) { document.getElementById('inputDirTokens').value = '0.0'; return; }
-            let resultado = valorBnb * 15000000; // Simulação de preço inicial
-            document.getElementById('inputDirTokens').value = resultado.toLocaleString('pt-BR');
-        }
-
-        function comprarTokens(lado) {
-            alert('Botão integrado! Quando as pools estiverem criadas, este clique chamará o contrato para liquidar via PancakeSwap.');
         }
     </script>
 </body>
