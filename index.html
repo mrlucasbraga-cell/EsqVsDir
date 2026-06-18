@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guerra Cripto: ESQ vs DIR</title>
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: rgba(20, 26, 38, 0.8);
+            --esq-color: #00ff66;
+            --esq-neon: 0 0 20px #00ff66, 0 0 40px rgba(0, 255, 102, 0.3);
+            --dir-color: #ff0055;
+            --dir-neon: 0 0 20px #ff0055, 0 0 40px rgba(255, 0, 85, 0.3);
+            --text-main: #ffffff;
+            --text-muted: #8491a5;
+            --border-glow: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(0, 255, 102, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(255, 0, 85, 0.05) 0%, transparent 40%);
+        }
+
+        .main-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0 40px 0;
+            border-bottom: 1px solid var(--border-glow);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, var(--esq-color), var(--dir-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-connect {
+            background: transparent;
+            border: 2px solid var(--text-main);
+            color: var(--text-main);
+            padding: 12px 24px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .btn-connect:hover {
+            background: var(--text-main);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .scoreboard-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .scoreboard-title {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .placar-grafico {
+            display: flex;
+            height: 35px;
+            background: #141a26;
+            border-radius: 50px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .barra-esq {
+            width: 52%; 
+            background: var(--esq-color);
+            box-shadow: var(--esq-neon);
+            transition: width 0.5s ease;
+        }
+
+        .barra-dir {
+            width: 48%; 
+            background: var(--dir-color);
+            box-shadow: var(--dir-neon);
+            transition: width 0.5s ease;
+        }
+
+        .valores-placar {
+            display: flex;
+            justify-content: space-between;
+            font-size: 2.2rem;
+            font-weight: 900;
+        }
+
+        .val-esq { color: var(--esq-color); text-shadow: var(--esq-neon); }
+        .val-dir { color: var(--dir-color); text-shadow: var(--dir-neon); }
+
+        .battle-arena {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 900px) {
+            .battle-arena {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .lado-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid var(--border-glow);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .lado-card.esq { border-left: 5px solid var(--esq-color); }
+        .lado-card.esq:hover { box-shadow: 0 0 30px rgba(0, 255, 102, 0.1); transform: translateY(-2px); }
+
+        .lado-card.dir { border-right: 5px solid var(--dir-color); }
+        .lado-card.dir:hover { box-shadow: 0 0 30px rgba(255, 0, 85, 0.1); transform: translateY(-2px); }
+
+        .token-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .token-name { font-size: 2rem; font-weight: 800; }
+        .esq .token-name { color: var(--esq-color); }
+        .dir .token-name { color: var(--dir-color); }
+
+        .token-badge {
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+        .esq .token-badge { background: rgba(0, 255, 102, 0.15); color: var(--esq-color); }
+        .dir .token-badge { background: rgba(255, 0, 85, 0.15); color: var(--dir-color); }
+
+        .resumo-texto {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .buy-box {
+            background: rgba(11, 14, 20, 0.6);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .input-group { margin-bottom: 15px; }
+        .input-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .input-wrapper { position: relative; display: flex; align-items: center; }
+        .input-wrapper input {
+            width: 100%;
+            background: #141a26;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 14px;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .esq .input-wrapper input:focus { border-color: var(--esq-color); }
+        .dir .input-wrapper input:focus { border-color: var(--dir-color); }
+
+        .input-currency { position: absolute; right: 15px; font-weight: 800; color: var(--text-muted); }
+
+        .btn-buy {
+            width: 100%;
+            padding: 16px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .esq .btn-buy { background: var(--esq-color); color: #000; }
+        .esq .btn-buy:hover { box-shadow: var(--esq-neon); transform: scale(1.01); }
+
+        .dir .btn-buy { background: var(--dir-color); color: #fff; }
+        .dir .btn-buy:hover { box-shadow: var(--dir-neon); transform: scale(1.01); }
+
+        .info-minima { text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-top: 12px; }
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <header>
+            <div class="logo">ESQ vs DIR</div>
+            <button class="btn-connect" id="connectBtn" onclick="conectarMetaMask()">Conectar Carteira</button>
+        </header>
+
+        <section class="scoreboard-container">
+            <div class="scoreboard-title">Placar de Volume de Mercado (Ao Vivo)</div>
+            <div class="placar-grafico">
+                <div class="barra-esq" id="barraEsq"></div>
+                <div class="barra-dir" id="barraDir"></div>
+            </div>
+            <div class="valores-placar">
+                <div class="val-esq" id="volumeEsq">52.4%</div>
+                <div class="val-dir" id="volumeDir">47.6%</div>
+            </div>
+        </section>
+
+        <main class="battle-arena">
+            <div class="lado-card esq">
+                <div>
+                    <div class="token-header">
+                        <div class="token-name">Esquerda Coin</div>
+                        <div class="token-badge">TOKEN: ESQ</div>
+                    </div>
+                    <p class="resumo-texto">
+                        O token oficial de quem defende as pautas e a união da Esquerda na blockchain. 
+                        Toda transação fortalece o placar com 5% de taxa revertidos para garantir a liquidez e a virada gráfica. 
+                        Não deixe o outro lado dominar a rede!
+                    </p>
+                </div>
+
+                <div class="buy-box">
+                    <div class="input-group">
+                        <label>Você paga</label>
+                        <div class="input-wrapper">
+                            <input type="number" step="0.01" placeholder="0.0" id="inputEsqBnb" oninput="calcularTokensEsq(this.value)">
+                            <span class="input-currency">BNB</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Você recebe (Estimado)</label>
+                        <div class="input-wrapper">
+                            <input type="text" placeholder="0.0" id="inputEsqTokens" readonly>
+                            <span class="input-currency" style="color: var(--esq-color)">ESQ</span>
+                        </div>
+                    </div>
+                    <button class="btn-buy" onclick="comprarTokens('ESQ')">Comprar ESQ</button>
+                    <div class="info-minima">Taxa de rede padrão + 5% de taxa do projeto aplicada.</div>
+                </div>
+            </div>
+
+            <div class="lado-card dir">
+                <div>
+                    <div class="token-header">
+                        <div class="token-name">Direita Coin</div>
+                        <div class="token-badge">TOKEN: DIR</div>
+                    </div>
+                    <p class="resumo-texto">
+                        A moeda soberana da Direita na internet. Desenvolvida para financiar o ecossistema 
+                        de engajamento e provar quem tem o maior volume de força financeira. 
+                        Mecanismo de proteção anti-baleia ativo para o gráfico subir de forma sólida.
+                    </p>
+                </div>
+
+                <div class="buy-box">
+                    <div class="input-group">
+                        <label>Você paga</label>
+                        <div class="input-wrapper">
+                            <input type="number" step="0.01" placeholder="0.0" id="inputDirBnb" oninput="calcularTokensDir(this.value)">
+                            <span class="input-currency">BNB</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Você recebe (Estimado)</label>
+                        <div class="input-wrapper">
+                            <input type="text" placeholder="0.0" id="inputDirTokens" readonly>
+                            <span class="input-currency" style="color: var(--dir-color)">DIR</span>
+                        </div>
+                    </div>
+                    <button class="btn-buy" onclick="comprarTokens('DIR')">Comprar DIR</button>
+                    <div class="info-minima">Taxa de rede padrão + 5% de taxa do projeto aplicada.</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function conectarMetaMask() {
+            if (typeof window.ethereum !== 'undefined') {
+                window.ethereum.request({ method: 'eth_requestAccounts' })
+                .then(accounts => {
+                    const conta = accounts[0];
+                    document.getElementById('connectBtn').innerText = conta.substring(0,6) + '...' + conta.substring(conta.length - 4);
+                })
+                .catch(err => { console.error(err); });
+            } else {
+                alert('MetaMask não encontrada. Abra este site dentro do app da MetaMask ou use um navegador com a extensão ligada.');
+            }
+        }
+
+        function calcularTokensEsq(valorBnb) {
+            if(!valorBnb || valorBnb <= 0) { document.getElementById('inputEsqTokens').value = '0.0'; return; }
+            let resultado = valorBnb * 15000000; // Simulação de preço inicial
+            document.getElementById('inputEsqTokens').value = resultado.toLocaleString('pt-BR');
+        }
+
+        function calcularTokensDir(valorBnb) {
+            if(!valorBnb || valorBnb <= 0) { document.getElementById('inputDirTokens').value = '0.0'; return; }
+            let resultado = valorBnb * 15000000; // Simulação de preço inicial
+            document.getElementById('inputDirTokens').value = resultado.toLocaleString('pt-BR');
+        }
+
+        function comprarTokens(lado) {
+            alert('Botão integrado! Quando as pools estiverem criadas, este clique chamará o contrato para liquidar via PancakeSwap.');
+        }
+    </script>
+</body>
+</html>
